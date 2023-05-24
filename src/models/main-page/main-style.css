@@ -1,5 +1,6 @@
 
 header,.header{
+  
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -10,8 +11,20 @@ border-radius: 5px;
 
 
 }
+.header > tr{
+  display: flex;
+  justify-content: space-between;
+  width: 100% !important;
+}
 .hide{
   display: none;
+}
+@media (max-width: 767px){
+  .modals{
+    width: 100% !important;
+    height: 100vh !important;
+
+  }
 }
 
 .header:nth-child(even){
@@ -89,3 +102,13 @@ border-radius: 5px;
     margin-bottom: 5px;
     font-weight: 500;
     }
+
+
+
+    /* ____________ settings ----------- */
+
+     .settinInputWrap {
+       display: flex;
+       flex-direction: row;
+    /* align-items: center; */
+      }

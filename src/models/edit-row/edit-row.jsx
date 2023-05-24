@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import ".././main-page/main-style.css";
+import "../main-page/main-style.css";
 import close from "../../assets/close.svg";
-import { addRows } from "../../state/home.slice";
-import { useDispatch } from "react-redux";
+import { addRows, editRows } from "../../state/home.slice.js";
+import { useDispatch, useSelector } from "react-redux";
 
-export const AddPage = ({ setAdd }) => {
+export const EditRow = ({ editItem, setShowEdit }) => {
+  const { tableData } = useSelector((state) => state.home);
   const dispatch = useDispatch();
-  const [inputs, setInputes] = useState({});
+  const [inputs, setInputes] = useState(editItem ? editItem : {});
+
   const handleSubmit = () => {
     console.log("handleSubmit", inputs);
     if (
@@ -16,28 +18,28 @@ export const AddPage = ({ setAdd }) => {
       inputs.Discount &&
       inputs.Available
     ) {
-      console.log("random", Math.floor(Math.random() * 19999), {
-        id: Math.floor(Math.random() * 19999),
-        ...inputs,
-      });
-      dispatch(addRows({ id: Math.floor(Math.random() * 19999), ...inputs }));
-      setAdd(false);
+      const updatedData = tableData?.map((item) =>
+        item?.id === inputs?.id ? inputs : item
+      );
+      dispatch(editRows(updatedData));
+      setShowEdit(false);
     } else {
       document.getElementById("error").innerText =
         "All Fields are Mendatory !!!";
     }
   };
   return (
-    <div className="AddWrapper modals">
+    <div className="AddWrapper modals ">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h2>Form</h2>{" "}
-        <img onClick={() => setAdd(false)} src={close} alt="cross" />
+        <h2>Edit Form</h2>{" "}
+        <img onClick={() => setShowEdit(false)} src={close} alt="cross" />
       </div>
       <div className="inputWrapper">
         <input
           className="input"
           id="ProductName"
           name="ProductName"
+          value={inputs?.ProductName}
           onChange={(e) =>
             setInputes({ ...inputs, [e.target.name]: e.target.value })
           }
@@ -51,6 +53,7 @@ export const AddPage = ({ setAdd }) => {
           id="Description"
           name="Description"
           placeholder="Discription"
+          value={inputs?.Description}
           onChange={(e) =>
             setInputes({ ...inputs, [e.target.name]: e.target.value })
           }
@@ -64,6 +67,7 @@ export const AddPage = ({ setAdd }) => {
           id="Price"
           name="Price"
           type="text-aria"
+          value={inputs?.Price}
           onChange={(e) =>
             setInputes({ ...inputs, [e.target.name]: e.target.value })
           }
@@ -77,6 +81,7 @@ export const AddPage = ({ setAdd }) => {
           name="Discount"
           type="text-aria"
           placeholder="Discount"
+          value={inputs?.Discount}
           onChange={(e) =>
             setInputes({ ...inputs, [e.target.name]: e.target.value })
           }
@@ -84,16 +89,17 @@ export const AddPage = ({ setAdd }) => {
       </div>
       <div className="inputWrapper">
         <select
+          className="input"
+          id="Available"
+          name="Available"
+          type="select"
           onChange={(e) =>
             setInputes({
               ...inputs,
               [e.target.name]: e.target.value,
             })
           }
-          className="input"
-          id="Available"
-          name="Available"
-          type="select"
+          value={inputs?.Available}
           placeholder="Available"
         >
           <option value="@">select</option>
@@ -102,10 +108,14 @@ export const AddPage = ({ setAdd }) => {
         </select>
       </div>
       <div>
-        <button style={{ marginRight: "10px" }} onClick={() => setAdd(false)}>
+        <button
+          style={{ marginRight: "10px" }}
+          onClick={() => setShowEdit(false)}
+        >
           Cancle
         </button>
         <button
+          disabled={editItem === inputs}
           onClick={() => {
             handleSubmit();
           }}

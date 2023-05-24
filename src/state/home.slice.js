@@ -54,9 +54,16 @@ export const homeSlice = createSlice({
     incrementByAmount: (state, action) => {
       state.value += action.payload;
     },
+    setTitles: (state, action) => {
+      state.titleArray = action.payload;
+    },
     addRows: (state, action) => {
       console.log("addRows", action.payload);
       state.tableData = [...state.tableData, action.payload];
+    },
+    editRows: (state, action) => {
+      console.log("addRows", action.payload);
+      state.tableData = action.payload;
     },
     rowDeleted: (state, action) => {
       console.log("rowDeleted", action.payload);
@@ -66,7 +73,14 @@ export const homeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount, addRows, rowDeleted } =
-  homeSlice.actions;
+export const {
+  increment,
+  decrement,
+  incrementByAmount,
+  addRows,
+  rowDeleted,
+  editRows,
+  setTitles,
+} = homeSlice.actions;
 
 export default homeSlice.reducer;
