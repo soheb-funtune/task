@@ -50,7 +50,9 @@ export const MainTable = ({ search }) => {
       {" "}
       <div className="header modals">
         {titleData?.map((item) => (
-          <span>{item}</span>
+          <span widthL={titleData?.length} className="ColumnWidth" key={item}>
+            {item}
+          </span>
         ))}
       </div>
       {search

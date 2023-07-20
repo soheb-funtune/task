@@ -21,10 +21,14 @@ border-radius: 5px;
 }
 @media (max-width: 767px){
   .modals{
-    width: 100% !important;
-    height: 100vh !important;
+    /* width: 100% !important;
+    height: 100vh !important; */
 
   }
+}
+.ColumnWidth{
+  
+  width: calc(100% /attr(widthL));
 }
 
 .header:nth-child(even){
@@ -84,6 +88,18 @@ border-radius: 5px;
     padding: 30px 20px;
     box-sizing: border-box;
     transition: all 0.6 ease-in-out;
+  }
+  @media (max-width: 993px){
+    .AddWrapper{
+      width: 50%;
+
+    }
+  }
+  @media (max-width: 767px){
+    .AddWrapper{
+      width: 100%;
+
+    }
   }
 
   .inputWrapper{
